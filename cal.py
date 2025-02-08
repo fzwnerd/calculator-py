@@ -36,6 +36,10 @@ def clear_log():
 def kurang(x, y):
     return x - y
 
+# Fungsi perkalian
+def kali(x, y):
+    return x * y
+
 # Fungsi kalkulator
 def calculator():
     print("Simple Calculator")
@@ -51,7 +55,7 @@ def calculator():
         elif operation == "-":
             result = kurang(num1, num2)  # Menggunakan fungsi kurang(x, y)
         elif operation == "*":
-            result = num1 * num2
+            result = kali(num1, num2)  # Menggunakan fungsi kali(x, y)
         elif operation == "/":
             if num2 == 0:
                 print("Error: Division by zero is not allowed.")
