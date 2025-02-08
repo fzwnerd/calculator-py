@@ -1,57 +1,89 @@
 import json
-from datetime import datetime
+import os
 
-def log_operation(operation, num1, num2, result):
+# Fungsi untuk menyimpan log ke file JSON
+def save_log(operation, num1, num2, result):
     log_entry = {
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "operation": operation,
         "num1": num1,
         "num2": num2,
         "result": result
     }
 
-    with open("calculator_log.json", "a") as log_file:
-        log_file.write(json.dumps(log_entry) + "\n")
+    # Cek apakah file log sudah ada
+    if os.path.exists("calculator_log.json"):
+        with open("calculator_log.json", "r") as file:
+            logs = json.load(file)
+    else:
+        logs = []
+
+    # Tambahkan log baru
+    logs.append(log_entry)
+
+    # Simpan log ke file
+    with open("calculator_log.json", "w") as file:
+        json.dump(logs, file, indent=4)
+
+# Fungsi untuk menghapus log
+def clear_log():
+    if os.path.exists("calculator_log.json"):
+        os.remove("calculator_log.json")
+        print("Log file has been deleted.")
+    else:
+        print("No log file found.")
 
 # Fungsi kalkulator
 def calculator():
-    print("Selamat datang di Kalkulator Sederhana!")
-    print("Pilih operasi:")
-    print("1. Penjumlahan")
-    print("2. Pengurangan")
-    print("3. Perkalian")
-    print("4. Pembagian")
+    print("Simple Calculator")
+    print("Operations: +, -, *, /")
 
-    choice = input("Masukkan pilihan (1/2/3/4): ")
+    try:
+        num1 = float(input("Enter the first number: "))
+        operation = input("Enter the operation: ")
+        num2 = float(input("Enter the second number: "))
 
-    if choice in ['1', '2', '3', '4']:
-        num1 = float(input("Masukkan angka pertama: "))
-        num2 = float(input("Masukkan angka kedua: "))
-
-        if choice == '1':
+        if operation == "+":
             result = num1 + num2
-            operation = "Penjumlahan"
-            print(f"Hasil: {num1} + {num2} = {result}")
-        elif choice == '2':
+        elif operation == "-":
             result = num1 - num2
-            operation = "Pengurangan"
-            print(f"Hasil: {num1} - {num2} = {result}")
-        elif choice == '3':
+        elif operation == "*":
             result = num1 * num2
-            operation = "Perkalian"
-            print(f"Hasil: {num1} * {num2} = {result}")
-        elif choice == '4':
+        elif operation == "/":
             if num2 == 0:
-                print("Error: Pembagian dengan nol tidak diperbolehkan!")
+                print("Error: Division by zero is not allowed.")
                 return
             result = num1 / num2
-            operation = "Pembagian"
-            print(f"Hasil: {num1} / {num2} = {result}")
+        else:
+            print("Invalid operation.")
+            return
 
-        log_operation(operation, num1, num2, result)
-    else:
-        print("Pilihan tidak valid!")
+        print(f"Result: {result}")
 
-# Jalankan kalkulator
+        # Simpan log operasi
+        save_log(operation, num1, num2, result)
+
+    except ValueError:
+        print("Invalid input. Please enter numbers only.")
+
+# Menu utama
+def main():
+    while True:
+        print("\nMenu:")
+        print("1. Use Calculator")
+        print("2. Clear Log")
+        print("3. Exit")
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            calculator()
+        elif choice == "2":
+            clear_log()
+        elif choice == "3":
+            print("Exiting the program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+# Jalankan program
 if __name__ == "__main__":
-    calculator()
+    main()
