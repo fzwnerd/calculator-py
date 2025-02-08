@@ -32,6 +32,10 @@ def clear_log():
     else:
         print("No log file found.")
 
+# Fungsi penjumlahan
+def tambah(x, y):
+    return x + y
+
 # Fungsi kalkulator
 def calculator():
     print("Simple Calculator")
@@ -43,7 +47,7 @@ def calculator():
         num2 = float(input("Enter the second number: "))
 
         if operation == "+":
-            result = num1 + num2
+            result = tambah(num1, num2)  # Menggunakan fungsi tambah
         elif operation == "-":
             result = num1 - num2
         elif operation == "*":
