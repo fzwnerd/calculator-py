@@ -40,6 +40,12 @@ def kurang(x, y):
 def kali(x, y):
     return x * y
 
+# Fungsi pembagian
+def bagi(x, y):
+    if y == 0:
+        return "Error: Division by zero is not allowed."
+    return x / y
+
 # Fungsi kalkulator
 def calculator():
     print("Simple Calculator")
@@ -57,18 +63,16 @@ def calculator():
         elif operation == "*":
             result = kali(num1, num2)  # Menggunakan fungsi kali(x, y)
         elif operation == "/":
-            if num2 == 0:
-                print("Error: Division by zero is not allowed.")
-                return
-            result = num1 / num2
+            result = bagi(num1, num2)  # Menggunakan fungsi bagi(x, y)
         else:
             print("Invalid operation.")
             return
 
         print(f"Result: {result}")
 
-        # Simpan log operasi
-        save_log(operation, num1, num2, result)
+        # Simpan log operasi (kecuali jika terjadi error pembagian oleh nol)
+        if result != "Error: Division by zero is not allowed.":
+            save_log(operation, num1, num2, result)
 
     except ValueError:
         print("Invalid input. Please enter numbers only.")
