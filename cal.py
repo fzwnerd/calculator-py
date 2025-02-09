@@ -32,15 +32,16 @@ def clear_log():
     else:
         print("No log file found.")
 
-# Fungsi pengurangan
+# Fungsi-fungsi Aritmatika
+def tambah(x, y):
+    return x + y
+
 def kurang(x, y):
     return x - y
 
-# Fungsi perkalian
 def kali(x, y):
     return x * y
 
-# Fungsi pembagian
 def bagi(x, y):
     if y == 0:
         return "Error: Division by zero is not allowed."
@@ -49,30 +50,41 @@ def bagi(x, y):
 # Fungsi kalkulator
 def calculator():
     print("Simple Calculator")
-    print("Operations: +, -, *, /")
+    print("Operations:")
+    print("1. Addition (+)")
+    print("2. Subtraction (-)")
+    print("3. Multiplication (*)")
+    print("4. Division (/)")
 
     try:
-        num1 = float(input("Enter the first number: "))
-        operation = input("Enter the operation: ")
-        num2 = float(input("Enter the second number: "))
+        # Input Pengguna
+        pilihan = input("Choose an operation (1/2/3/4): ")
+        angka1 = float(input("Enter the first number: "))
+        angka2 = float(input("Enter the second number: "))
 
-        if operation == "+":
-            result = num1 + num2
-        elif operation == "-":
-            result = kurang(num1, num2)  # Menggunakan fungsi kurang(x, y)
-        elif operation == "*":
-            result = kali(num1, num2)  # Menggunakan fungsi kali(x, y)
-        elif operation == "/":
-            result = bagi(num1, num2)  # Menggunakan fungsi bagi(x, y)
+        # Kondisi dan Pemanggilan Fungsi
+        if pilihan == "1":
+            result = tambah(angka1, angka2)  # Panggil fungsi tambah
+            operation = "+"
+        elif pilihan == "2":
+            result = kurang(angka1, angka2)  # Panggil fungsi kurang
+            operation = "-"
+        elif pilihan == "3":
+            result = kali(angka1, angka2)  # Panggil fungsi kali
+            operation = "*"
+        elif pilihan == "4":
+            result = bagi(angka1, angka2)  # Panggil fungsi bagi
+            operation = "/"
         else:
-            print("Invalid operation.")
+            print("Invalid operation choice.")
             return
 
+        # Output
         print(f"Result: {result}")
 
         # Simpan log operasi (kecuali jika terjadi error pembagian oleh nol)
         if result != "Error: Division by zero is not allowed.":
-            save_log(operation, num1, num2, result)
+            save_log(operation, angka1, angka2, result)
 
     except ValueError:
         print("Invalid input. Please enter numbers only.")
