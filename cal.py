@@ -49,7 +49,7 @@ def bagi(x, y):
 
 # Fungsi kalkulator
 def calculator():
-    print("Simple Calculator")
+    print("\nSimple Calculator")
     print("Operations:")
     print("1. Addition (+)")
     print("2. Subtraction (-)")
@@ -91,6 +91,9 @@ def calculator():
 
 # Menu utama
 def main():
+    # Pesan Selamat Datang
+    print("Welcome to Python Calculator Beta Test!")
+
     while True:
         print("\nMenu:")
         print("1. Use Calculator")
