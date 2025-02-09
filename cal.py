@@ -2,11 +2,10 @@ import json
 import os
 
 # Fungsi untuk menyimpan log ke file JSON
-def save_log(operation, num1, num2, result):
+def save_log(operation, numbers, result):
     log_entry = {
         "operation": operation,
-        "num1": num1,
-        "num2": num2,
+        "numbers": numbers,
         "result": result
     }
 
@@ -47,47 +46,53 @@ def bagi(x, y):
         return "Error: Division by zero is not allowed."
     return x / y
 
-# Fungsi kalkulator
+# Fungsi kalkulator dengan hitungan ganda
 def calculator():
-    print("\nSimple Calculator")
-    print("Operations:")
-    print("1. Addition (+)")
-    print("2. Subtraction (-)")
-    print("3. Multiplication (*)")
-    print("4. Division (/)")
+    print("\nSimple Calculator with Multiple Operations")
+    print("Operations: +, -, *, /")
 
     try:
-        # Input Pengguna
-        pilihan = input("Choose an operation (1/2/3/4): ")
-        angka1 = float(input("Enter the first number: "))
-        angka2 = float(input("Enter the second number: "))
+        # Input angka dan operasi
+        expression = input("Enter your expression (e.g., 5 + 3 - 2): ")
+        parts = expression.split()
 
-        # Kondisi dan Pemanggilan Fungsi
-        if pilihan == "1":
-            result = tambah(angka1, angka2)  # Panggil fungsi tambah
-            operation = "+"
-        elif pilihan == "2":
-            result = kurang(angka1, angka2)  # Panggil fungsi kurang
-            operation = "-"
-        elif pilihan == "3":
-            result = kali(angka1, angka2)  # Panggil fungsi kali
-            operation = "*"
-        elif pilihan == "4":
-            result = bagi(angka1, angka2)  # Panggil fungsi bagi
-            operation = "/"
-        else:
-            print("Invalid operation choice.")
+        # Validasi input
+        if len(parts) < 3 or len(parts) % 2 == 0:
+            print("Invalid expression. Please use the format: x + y - z")
             return
+
+        # Inisialisasi hasil dengan angka pertama
+        result = float(parts[0])
+        operation_history = [result]  # Untuk menyimpan riwayat operasi
+
+        # Proses hitungan ganda
+        for i in range(1, len(parts), 2):
+            operator = parts[i]
+            next_number = float(parts[i + 1])
+
+            if operator == "+":
+                result = tambah(result, next_number)
+            elif operator == "-":
+                result = kurang(result, next_number)
+            elif operator == "*":
+                result = kali(result, next_number)
+            elif operator == "/":
+                result = bagi(result, next_number)
+            else:
+                print(f"Invalid operator: {operator}")
+                return
+
+            operation_history.extend([operator, next_number])  # Tambahkan ke riwayat
 
         # Output
         print(f"Result: {result}")
 
         # Simpan log operasi (kecuali jika terjadi error pembagian oleh nol)
         if result != "Error: Division by zero is not allowed.":
-            save_log(operation, angka1, angka2, result)
+            save_log(" ".join(map(str, operation_history)), operation_history, result)
 
     except ValueError:
-        print("Invalid input. Please enter numbers only.")
+        print("Invalid input. Please enter numbers and valid operators.")
 
 # Menu utama
 def main():
