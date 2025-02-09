@@ -46,14 +46,14 @@ def bagi(x, y):
         return "Error: Division by zero is not allowed."
     return x / y
 
-# Fungsi kalkulator dengan hitungan ganda
+# Fungsi kalkulator dengan hitungan ganda dan dukungan angka desimal
 def calculator():
     print("\nSimple Calculator with Multiple Operations")
     print("Operations: +, -, *, /")
 
     try:
         # Input angka dan operasi
-        expression = input("Enter your expression (e.g., 5 + 3 - 2): ")
+        expression = input("Enter your expression (e.g., 5.5 + 3.2 - 2.1): ")
         parts = expression.split()
 
         # Validasi input
